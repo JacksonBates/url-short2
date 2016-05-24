@@ -1,5 +1,7 @@
 var mongodb = require( 'mongodb' );
 var mongo = mongodb.MongoClient;
+// This env variable contains username:password for mLab db
+// The env variable has also been added to Heroku config
 var mongoUserPsw = process.env.MONGO_USER_PSW;
 var url = 'mongodb://' +
   mongoUserPsw +
