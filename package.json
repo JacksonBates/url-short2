@@ -1,0 +1,30 @@
+{
+  "name": "url-short2",
+  "version": "1.0.0",
+  "description": "A microservice that provides a 'short' url",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JacksonBates/url-short2.git"
+  },
+  "author": "Jackson Bates",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JacksonBates/url-short2/issues"
+  },
+  "homepage": "https://github.com/JacksonBates/url-short2#readme",
+  "devDependencies": {
+    "babel-eslint": "^6.0.4",
+    "chai": "^3.5.0",
+    "eslint": "^2.10.2",
+    "eslint-plugin-react": "^5.1.1",
+    "mocha": "^2.5.1"
+  },
+  "dependencies": {
+    "mongodb": "^2.1.19"
+  }
+}
