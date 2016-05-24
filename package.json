@@ -18,13 +18,8 @@
   },
   "homepage": "https://github.com/JacksonBates/url-short2#readme",
   "devDependencies": {
-    "babel-eslint": "^6.0.4",
     "chai": "^3.5.0",
     "eslint": "^2.10.2",
-    "eslint-plugin-react": "^5.1.1",
     "mocha": "^2.5.1"
-  },
-  "dependencies": {
-    "mongodb": "^2.1.19"
   }
 }
