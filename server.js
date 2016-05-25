@@ -17,13 +17,12 @@ mongo.connect( url, function( err, db ) {
   } else {
     console.log( 'Success: Connected to DB' );
     // Magic happens here...
-    routes.listen();
     routes.routes();
     // call a routing function from module!
 
     // close the db
-    db.close();
-    console.log( 'Info: Connection to DB closed' );
+    // db.close();
+    // console.log( 'Info: Connection to DB closed' );
 
   }
 });
