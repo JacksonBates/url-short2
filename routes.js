@@ -1,31 +1,23 @@
-var routes = function() {
+module.exports = function( app, db ) {
 
-  var express = require( 'express' );
-  var app = express();
-
-  function routes() {
-    // listen
-    app.set( 'port', ( process.env.PORT || 5000 ));
-    app.listen( app.get( 'port' ), function() {
-      console.log( 'Node app is running on port ', app.get( 'port' ) );
-    });
-
-    // handle GET requests
+    // route GET requests
     app.get( '/', function( req, res ) {
-      console.log( "I'm rooting for you!' ");
-      res.end( 'Working' );
+      console.log( "I'm rooting for you!");
+      res.render( 'index' );
     });
 
-    app.get( '/route', function( req, res ) {
-      console.log( '/route' );
-      res.send( '/route' );
+    app.get( '/new/:URL*', function( req, res ) {
+      var originalUrl = req.originalUrl.slice(5);
+      console.log( originalUrl, isValidUrl(originalUrl));
+      res.end();
     });
-  }
 
-  return {
-    routes: routes
-  };
-
+    function isValidUrl(originalUrl) {
+      var re = /(http:\/\/|https:\/\/)[a-z0-9\-]+[.]\w+/;
+      if ( originalUrl.match( re ) !== null ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
 };
-
-module.exports = routes();

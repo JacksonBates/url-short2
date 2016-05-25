@@ -1,5 +1,8 @@
 var mongodb = require( 'mongodb' );
 var mongo = mongodb.MongoClient;
+var path = require( 'path' );
+var express = require( 'express' );
+var app = express();
 
 // This env variable contains username:password for mLab db
 // The env variable has also been added to Heroku config
@@ -7,9 +10,10 @@ var mongo = mongodb.MongoClient;
 var mongoUserPsw = process.env.MONGO_USER_PSW;
 var url = 'mongodb://' +
   mongoUserPsw +
-  '@ds025742.mlab.com:25742/fcc-url-shortner-microservice-db';
+  '@ds013911.mlab.com:13911/smlr-url';
 
 var routes = require( './routes' );
+var data = require( './data' );
 
 mongo.connect( url, function( err, db ) {
   if ( err ) {
@@ -17,12 +21,13 @@ mongo.connect( url, function( err, db ) {
   } else {
     console.log( 'Success: Connected to DB' );
     // Magic happens here...
-    routes.routes();
-    // call a routing function from module!
-
-    // close the db
-    // db.close();
-    // console.log( 'Info: Connection to DB closed' );
-
+    routes(app, db);
+    data(app, db);
   }
+  app.set( 'port', ( process.env.PORT || 5000 ));
+  app.set('views', path.join(__dirname, '/views'));
+  app.set('view engine', 'ejs');
+  app.listen( app.get( 'port' ), function() {
+    console.log( 'Node app is running on port ', app.get( 'port' ) );
+  });
 });
