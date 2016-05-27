@@ -51,6 +51,8 @@ router.get( '/:SHORT', function( req, res ) {
       if ( docs && docs.length === 1 ) {
         console.log( docs[0] );
         res.redirect( docs[0].originalUrl );
+      } else {
+        console.log( docs );
       }
     }
   });
