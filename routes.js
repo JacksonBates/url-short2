@@ -21,7 +21,7 @@ router.get( '/test', function( req, res ) {
 router.get( '/result', function( req, res ) {
   db = req.db;
   collection = db.collection( 'urls' );
-  collection.find( {}, {'_id': false} ).toArray( function( err, docs ) {
+  collection.find( {}, {_id: false} ).toArray( function( err, docs ) {
     if ( err ) {
       console.log( 'Error: Find operation failed' );
     } else {
@@ -61,7 +61,7 @@ router.get( '/new/:URL*', function( req, res ) {
   if ( isValidUrl( originalUrl ) ) {
     db = req.db;
     data( db, originalUrl );
-    res.redirect( './result' );
+    res.redirect( '/result' );
   } else {
     res.end( 'Error: Invalid URL' );
   }
