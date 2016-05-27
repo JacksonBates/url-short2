@@ -18,6 +18,19 @@ router.get( '/test', function( req, res ) {
   });
 });
 
+router.get( '/result', function( req, res ) {
+  db = req.db;
+  collection = db.collection( 'urls' );
+  collection.find( {}, {'_id': false} ).toArray( function( err, docs ) {
+    if ( err ) {
+      console.log( 'Error: Find operation failed' );
+    } else {
+      console.log( docs[ docs.length - 1 ] );
+      res.send( docs[ docs.length - 1 ] );
+    }
+  });
+});
+
 router.get( '/', function( req, res ) {
   console.log( "I'm rooting for you!");
   res.render( 'index' );
@@ -37,16 +50,21 @@ router.get( '/:SHORT', function( req, res ) {
     } else {
       if ( docs && docs.length === 1 ) {
         console.log( docs[0] );
+        res.redirect( docs[0].originalUrl );
       }
     }
   });
-  res.end();
 });
 
 router.get( '/new/:URL*', function( req, res ) {
   var originalUrl = req.originalUrl.slice(5);
-  db = req.db;
-  res.json( data( db, originalUrl ) );
+  if ( isValidUrl( originalUrl ) ) {
+    db = req.db;
+    data( db, originalUrl );
+    res.redirect( './result' );
+  } else {
+    res.end( 'Error: Invalid URL' );
+  }
 });
 
 function isValidUrl(originalUrl) {
