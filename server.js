@@ -12,8 +12,7 @@ var url = 'mongodb://' +
   mongoUserPsw +
   '@ds013911.mlab.com:13911/smlr-url';
 
-var routes = require( './routes' );
-var data = require( './data' );
+// var data = require( './data' );
 
 mongo.connect( url, function( err, db ) {
   if ( err ) {
@@ -21,8 +20,12 @@ mongo.connect( url, function( err, db ) {
   } else {
     console.log( 'Success: Connected to DB' );
     // Magic happens here...
-    routes(app, db);
-    data(app, db);
+    app.use( function( req, res, next) {
+      req.db = db;
+      next();
+    });
+    app.use( require( './routes' ));
+    // data(db, app);
   }
   app.set( 'port', ( process.env.PORT || 5000 ));
   app.set('views', path.join(__dirname, '/views'));
