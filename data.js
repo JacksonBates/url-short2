@@ -1,4 +1,4 @@
-var data = function( db, originalUrl ) {
+var data = function( db, originalUrl, callback ) {
   // var shortUrl;
   var urlObject = {
     originalUrl: 'nope',
@@ -26,7 +26,7 @@ var data = function( db, originalUrl ) {
         urls.insert( urlObject );
         console.log( 'Else-if docs.l = 0 returns: ' +
           JSON.stringify( urlObject ) );
-        return urlObject;
+        callback( urlObject ); //urlObject;
       } else if ( docs.length === 1 ) {
         urlObject = {
             originalUrl: docs[0].originalUrl,
@@ -34,10 +34,10 @@ var data = function( db, originalUrl ) {
           };
         console.log( 'Else-if docs.l = 1 returns: ' +
           JSON.stringify( urlObject ) );
-        return urlObject; // this does not get passed back to routes.js
+        callback( urlObject ); // return urlObject; // this does not get passed back to routes.js
       }
     }
-    console.log( 'This is the end of the array function: ' + urlObject );
+    // console.log( 'This is the end of the array function: ' + urlObject );
     // return urlObject;
   });
 

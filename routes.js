@@ -63,9 +63,13 @@ router.get( '/new/:URL*', function( req, res ) {
   var originalUrl = req.originalUrl.slice(5);
   if ( isValidUrl( originalUrl ) ) {
     db = req.db;
-    var urlObject = data( db, originalUrl );
-    console.log( 'Routes log: ' + JSON.stringify( urlObject ) );
-    res.end( urlObject );
+    data( db, originalUrl, function( urlObject ) {
+      console.log( 'Routes log: ' + JSON.stringify( urlObject ));
+       res.send( JSON.stringify( urlObject ) );
+       res.end();
+    } );
+    // console.log( 'Routes log: ' + JSON.stringify( urlObject ) );
+    // res.end( urlObject );
     // res.end( urlObject );
     // res.render( 'result', {
     //  originalUrl: originalUrl,
