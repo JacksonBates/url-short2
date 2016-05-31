@@ -65,7 +65,11 @@ router.get( '/new/:URL*', function( req, res ) {
     db = req.db;
     data( db, originalUrl, function( urlObject ) {
       console.log( 'Routes log: ' + JSON.stringify( urlObject ));
-       res.send( JSON.stringify( urlObject ) );
+       var outputUrl = {
+         originalUrl: urlObject.originalUrl,
+         shortUrl: urlObject.shortUrl
+       };
+       res.send( JSON.stringify( outputUrl ) );
        res.end();
     } );
     // console.log( 'Routes log: ' + JSON.stringify( urlObject ) );
