@@ -3,6 +3,7 @@ var router = express.Router();
 var data = require( './data' );
 var db;
 var collection;
+// var linkGen = require( './linkGen' );
 
 // route GET requests
 router.get( '/test', function( req, res ) {
@@ -21,7 +22,7 @@ router.get( '/test', function( req, res ) {
 router.get( '/result', function( req, res ) {
   db = req.db;
   collection = db.collection( 'urls' );
-  collection.find( {}, {_id: false} ).toArray( function( err, docs ) {
+  collection.find( {}, { _id: false } ).toArray( function( err, docs ) {
     if ( err ) {
       console.log( 'Error: Find operation failed' );
     } else {
@@ -39,7 +40,7 @@ router.get( '/', function( req, res ) {
 router.get( '/:SHORT', function( req, res ) {
   var short = req.params.SHORT;
   var shortHttp = 'http://smlr-url.herokuapp.com/' + short;
-    var shortHttps = 'https://smlr-url.herokuapp.com/' + short;
+  var shortHttps = 'https://smlr-url.herokuapp.com/' + short;
   db = req.db;
   collection = db.collection( 'urls' );
   collection.find( {
@@ -52,7 +53,7 @@ router.get( '/:SHORT', function( req, res ) {
         console.log( docs[0] );
         res.redirect( docs[0].originalUrl );
       } else {
-        console.log( docs );
+        // res.redirect( '/' );
       }
     }
   });
@@ -62,14 +63,20 @@ router.get( '/new/:URL*', function( req, res ) {
   var originalUrl = req.originalUrl.slice(5);
   if ( isValidUrl( originalUrl ) ) {
     db = req.db;
-    data( db, originalUrl );
-    res.redirect( '/result' );
+    var urlObject = data( db, originalUrl );
+    console.log( 'Routes log: ' + JSON.stringify( urlObject ) );
+    res.end( urlObject );
+    // res.end( urlObject );
+    // res.render( 'result', {
+    //  originalUrl: originalUrl,
+    //  shortUrl: urlObject.shortUrl
+    // });
   } else {
     res.end( 'Error: Invalid URL' );
   }
 });
 
-function isValidUrl(originalUrl) {
+function isValidUrl( originalUrl ) {
   var re = /(http:\/\/|https:\/\/)[a-z0-9\-]+[.]\w+/;
   if ( originalUrl.match( re ) !== null ) {
     return true;
